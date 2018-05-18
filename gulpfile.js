@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var bs = require('browser-sync').create();
 var sass = require('gulp-sass');
+var babel = require('gulp-babel');
+var concat = require('gulp-concat');
 var browserify = require('gulp-browserify');
 
 gulp.task('start', function() {
@@ -12,7 +14,7 @@ gulp.task('start', function() {
 
   // add browserSync.reload to the tasks array to make
   // all browsers reload after tasks are complete.
-  gulp.watch("app/js/*.js", ['js-watch']);
+  gulp.watch("app/js/**/*.js", ['js-watch']);
 });
 
 gulp.task('sass', function() {
@@ -23,7 +25,11 @@ gulp.task('sass', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src('app/js/*js')
+  return gulp.src('app/js/**/*js')
+    .pipe(concat('main.js'))
+    .pipe(babel({
+      presets: ['env']
+    }))
     .pipe(browserify())
     .pipe(gulp.dest('dist/js'));
 })
@@ -33,7 +39,7 @@ gulp.task('js-watch', ['js'], function(done) {
   done();
 });
 
-gulp.task('watch', ['start'], function() {
+gulp.task('watch', ['start', 'js', 'sass'], function() {
   gulp.watch("app/scss/*.scss", ['sass']);
   gulp.watch("*.html").on('change', bs.reload);
 });
