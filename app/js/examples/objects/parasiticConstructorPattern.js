@@ -5,7 +5,9 @@
 //
 // This pattern allows you to create constructors for objects that may not be possible otherwise. For
 // example, you may want to create a special array that has an extra method. Since you don’t have
-// direct access to the Array constructor, this pattern works:
+// direct access to the Array constructor, this pattern works.
+//
+// Note: This pattern should only be used if no other patterns are suitable for what you're trying to do.
 
 function SpecialArray() {
   // Create the array
@@ -18,7 +20,7 @@ function SpecialArray() {
   values.toPipedString = function() {
     return this.join('|');
   }
-  
+
   // Return it
   return values;
 }
