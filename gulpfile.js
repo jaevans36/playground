@@ -14,7 +14,7 @@ gulp.task('start', function() {
 
   // add browserSync.reload to the tasks array to make
   // all browsers reload after tasks are complete.
-  gulp.watch("app/js/**/*.js", ['js-watch']);
+  gulp.watch('app/js/**/*.js', ['js-watch']);
 });
 
 gulp.task('sass', function() {
@@ -25,7 +25,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src('app/js/**/*js')
+  return gulp.src(['app/js/**/*js', '!app/js/**/_*js'])
     .pipe(concat('main.js'))
     .pipe(babel({
       presets: ['env']
@@ -40,6 +40,6 @@ gulp.task('js-watch', ['js'], function(done) {
 });
 
 gulp.task('watch', ['start', 'js', 'sass'], function() {
-  gulp.watch("app/scss/*.scss", ['sass']);
-  gulp.watch("*.html").on('change', bs.reload);
+  gulp.watch('app/scss/*.scss', ['sass']);
+  gulp.watch('*.html').on('change', bs.reload);
 });

@@ -28,6 +28,34 @@ var person3 = new Person('Jaymond', 34, 'Male', 'Front-end');
 var person4 = new Person('Syl', 26, 'Male', 'Back-end');
 
 // console.log(person3);
+// Durable Constructor Pattern Example
+//
+// Durable constructor patterns are best used in secure environments 
+// (those that forbid the use of this and new) or to protect data from the rest
+// of the application (as in mashups).
+//
+// A durable constructor is a constructor that follows a pattern
+// similar to the parasitic constructor pattern, with two differences: instance methods on the created
+// object don’t refer to this, and the constructor is never called using the new operator. The Person
+// constructor from the previous section can be rewritten as a durable constructor like this:
+
+function Album(name, numOfTracks, releaseMonth) {
+  // Create the object to return
+  var o = new Object();
+
+  // optional: define private variable/functions here
+
+  // attach methods
+  o.sayAlbumName = function () {
+    console.log(name);
+  };
+
+  // Return the object
+  return o;
+}
+
+var albumOne = new Album('Something something', 12, 'August');
+// albumOne.sayAlbumName(); // 'Something something'
 // Factory Pattern
 // Although this solves the problem of creating multiple similar objects, this pattern
 // doesn't address the issue of object identification (What type of object an object is).
@@ -116,35 +144,6 @@ Object.defineProperties(moreBooks, {
 // moreBooks.year = 2008;
 
 // console.log(moreBooks);
-// Parasitic Constructor Pattern
-// The parasitic constructor pattern is typically a fallback when the other patterns fail. The basic idea
-// of this pattern is to create a constructor that simply wraps the creation and return of another object
-// while looking like a typical constructor.
-//
-// This pattern allows you to create constructors for objects that may not be possible otherwise. For
-// example, you may want to create a special array that has an extra method. Since you don’t have
-// direct access to the Array constructor, this pattern works.
-//
-// Note: This pattern should only be used if no other patterns are suitable for what you're trying to do.
-
-function SpecialArray() {
-  // Create the array
-  var values = new Array();
-
-  // Add the values
-  values.push.apply(values, arguments);
-
-  // Assign the method
-  values.toPipedString = function () {
-    return this.join('|');
-  };
-
-  // Return it
-  return values;
-}
-
-var colours = new SpecialArray('Red', 'Blue', 'Green', 'Yellow', 'Black');
-// console.log(colours.toPipedString());
 // Prototype pattern
 //
 // The benefi t of using the prototype is that all of its properties and methods are shared among object instances
