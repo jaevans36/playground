@@ -1,6 +1,9 @@
 var gulp = require('gulp');
 var bs = require('browser-sync').create();
 var sass = require('gulp-sass');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var cssnano = require('cssnano');
 var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var browserify = require('gulp-browserify');
@@ -18,8 +21,13 @@ gulp.task('start', function() {
 });
 
 gulp.task('sass', function() {
+  var processors = [
+    autoprefixer,
+    cssnano
+  ];
   return gulp.src('app/scss/*.scss')
-    .pipe(sass())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(postcss(processors))
     .pipe(gulp.dest('dist/css'))
     .pipe(bs.reload({stream: true})); // prompts reload after compilation
 });
