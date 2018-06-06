@@ -31,6 +31,7 @@ var getURL = function getURL(url, success, error) {
 };
 
 // using getURL function to scrape teams from Worldcup site.
+// and create an object with each teams data
 getURL('http://www.fifa.com/worldcup/teams/index.html', function (data) {
   console.log('success:');
 
@@ -52,23 +53,15 @@ getURL('http://www.fifa.com/worldcup/teams/index.html', function (data) {
         isAssigned: false,
         assignTo: ''
       },
-      flagImg: element[i].childNodes[0].currentSrc,
+      flagImgUrl: element[i].childNodes[0].currentSrc,
       teamUrl: 'http://www.fifa.com' + element[i].pathname
     };
     // Add each team found to the page
     // teamList.innerHTML += element[i].innerHTML;
   }
 }, function (data) {
-  console.log('error:');
+  console.log('error:', data);
 });
-
-// for (let i = 0; i < teamsArray.length; i++) {
-//   teamsObjList[i] = {
-//     teamName: teamsArray[i],
-//     assigned: false,
-//     assignedTo: ''
-//   };
-// }
 
 console.log(teamsObjList);
 
