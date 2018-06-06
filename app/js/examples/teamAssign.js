@@ -50,7 +50,8 @@ getURL(
           isAssigned: false,
           assignTo: ''
         },
-        flagImg: element[i].childNodes[0].currentSrc
+        flagImg: element[i].childNodes[0].currentSrc,
+        teamUrl: 'http://www.fifa.com' + element[i].pathname
       };
       // Add each team found to the page
       // teamList.innerHTML += element[i].innerHTML;
